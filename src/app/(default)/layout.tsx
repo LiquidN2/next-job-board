@@ -4,7 +4,7 @@ import { Suspense } from 'react';
 import { Inter } from 'next/font/google';
 import '../globals.css';
 
-// import Nav from '@/components/Nav';
+import Nav from '@/components/Nav';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en" className="h-full bg-gray-100">
       <body className={`h-full ${inter.className}`}>
         <div className="min-h-full">
-          {/* <Nav /> */}
+          <Nav />
           {/* <Suspense fallback={<Loading />}>{children}</Suspense> */}
           {children}
         </div>
