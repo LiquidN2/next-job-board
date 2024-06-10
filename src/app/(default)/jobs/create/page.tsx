@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-import Header from '@/components/Header';
-import JobForm from '@/components/JobForm';
+import Header from '@/components/ui/Header';
+import JobForm from '@/components/job/JobForm';
 import { createJob, processJobFormData } from '@/actions/job';
 
 export const metadata: Metadata = {

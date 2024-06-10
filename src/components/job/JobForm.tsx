@@ -5,10 +5,10 @@ import { useFormStatus } from 'react-dom';
 import { useRouter } from 'next/navigation';
 
 import { type InsertJob } from '@/db/schema';
-import Button from './Button';
-import Label from './Label';
-import Input from './Input';
-import Textarea from './Textarea';
+import Button from '../ui/Button';
+import Label from '../ui/Label';
+import Input from '../ui/Input';
+import Textarea from '../ui/Textarea';
 
 interface JobFormButtonsProps extends ComponentPropsWithoutRef<'div'> {
   jobId?: number;

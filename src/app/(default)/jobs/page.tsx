@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
-import Header from '@/components/Header';
-import JobCard from '@/components/JobCard';
+import Header from '@/components/ui/Header';
+import JobCard from '@/components/job/JobCard';
 import { findJobs } from '@/db/queries/job';
 
 export const metadata: Metadata = {

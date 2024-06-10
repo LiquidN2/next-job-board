@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import Header from '@/components/Header';
-import JobShow from '@/components/JobShow';
+import Header from '@/components/ui/Header';
+import JobShow from '@/components/job/JobShow';
 
 import { findJobById } from '@/db/queries/job';
 

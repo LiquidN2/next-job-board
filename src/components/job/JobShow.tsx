@@ -1,6 +1,6 @@
 'use client';
 
-import Button from './Button';
+import Button from '../ui/Button';
 import { formatCurrency } from '@/utils/utils';
 
 interface JobShowProps {

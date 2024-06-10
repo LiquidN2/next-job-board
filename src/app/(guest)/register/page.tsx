@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import Label from '@/components/Label';
-import Input from '@/components/Input';
+import Label from '@/components/ui/Label';
+import Input from '@/components/ui/Input';
 
 import { registerUser } from '@/actions/user';
 
