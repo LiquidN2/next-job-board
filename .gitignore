@@ -38,3 +38,6 @@ next-env.d.ts
 
 # SQLite DB file
 local.db*
+
+# Bun file
+bun.lockb
