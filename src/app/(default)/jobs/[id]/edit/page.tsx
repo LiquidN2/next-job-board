@@ -5,8 +5,7 @@ import { notFound, redirect } from 'next/navigation';
 import Header from '@/components/Header';
 import JobForm from '@/components/JobForm';
 
-import { processJobFormData } from '@/actions/jobsActions';
-import { findJobById, updateJob } from '@/db/queries/job';
+import { findJobById, updateJob, processJobFormData } from '@/actions/job';
 
 export const metadata: Metadata = {
   title: 'Next Job Board | Edit Job',

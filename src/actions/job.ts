@@ -1,4 +1,5 @@
 import { type InsertJob } from '@/db/schema';
+export { createJob, updateJob, findJobs, findJobById } from '@/db/queries/job';
 
 export async function processJobFormData(formData: FormData) {
   'use server';

@@ -4,8 +4,7 @@ import { redirect } from 'next/navigation';
 
 import Header from '@/components/Header';
 import JobForm from '@/components/JobForm';
-import { processJobFormData } from '@/actions/jobsActions';
-import { createJob } from '@/db/queries/job';
+import { createJob, processJobFormData } from '@/actions/job';
 
 export const metadata: Metadata = {
   title: 'Next Job Board | Create Job',

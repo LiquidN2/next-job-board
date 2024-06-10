@@ -1,12 +1,23 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import Image from "next/image";
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import Image from 'next/image';
+
+import Label from '@/components/Label';
+import Input from '@/components/Input';
+
+import { registerUser } from '@/actions/user';
 
 export const metadata: Metadata = {
-  title: "Next VPS | Register",
+  title: 'Next VPS | Register',
 };
 
 export default function Register() {
+  async function submit(formData: FormData) {
+    'use server';
+    console.log('Form submitted');
+    await registerUser(formData);
+  }
+
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -23,78 +34,49 @@ export default function Register() {
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6" action="#" method="POST">
+        <form className="space-y-6" action={submit}>
           <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Name
-            </label>
+            <Label htmlFor="name">Name</Label>
             <div className="mt-2">
-              <input
-                id="name"
-                name="name"
-                type="text"
-                required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
+              <Input id="name" name="name" type="text" required />
             </div>
           </div>
 
           <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Email address
-            </label>
+            <Label htmlFor="email">Email</Label>
             <div className="mt-2">
-              <input
+              <Input
                 id="email"
                 name="email"
                 type="email"
                 autoComplete="email"
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
 
           <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Password
-            </label>
+            <Label htmlFor="password">Password</Label>
             <div className="mt-2">
-              <input
+              <Input
                 id="password"
                 name="password"
                 type="password"
                 autoComplete="current-password"
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
 
           <div>
-            <label
-              htmlFor="password-confirmation"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Password confirmation
-            </label>
+            <Label htmlFor="password-confirmation">Password confirmation</Label>
             <div className="mt-2">
-              <input
+              <Input
                 id="password-confirmation"
                 name="password-confirmation"
                 type="password"
                 autoComplete="current-password"
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
@@ -110,7 +92,7 @@ export default function Register() {
         </form>
 
         <p className="mt-10 text-center text-sm text-gray-500">
-          Already a member?{" "}
+          Already a member?{' '}
           <Link
             href="/login"
             className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
