@@ -1,21 +1,18 @@
 'use client';
 
 import { type ComponentPropsWithoutRef, useEffect, useState } from 'react';
-import { useFormStatus } from 'react-dom';
+import { useFormState, useFormStatus } from 'react-dom';
 import { useRouter } from 'next/navigation';
 
 import { type InsertJob } from '@/db/schema';
 import Button from '../ui/Button';
 import Label from '../ui/Label';
 import Input from '../ui/Input';
+import InputError from '../ui/InputError';
 import Textarea from '../ui/Textarea';
 
 interface JobFormButtonsProps extends ComponentPropsWithoutRef<'div'> {
   jobId?: number;
-}
-
-interface JobFormProps extends ComponentPropsWithoutRef<'form'> {
-  job?: InsertJob;
 }
 
 const JobFormButtons = ({ jobId }: JobFormButtonsProps) => {
@@ -59,10 +56,21 @@ const JobFormButtons = ({ jobId }: JobFormButtonsProps) => {
   );
 };
 
-export default function JobForm({ job, ...rest }: JobFormProps) {
+interface JobFormProps extends ComponentPropsWithoutRef<'form'> {
+  job?: InsertJob;
+  submit: (prevState: any, formData: FormData) => Promise<any>;
+}
+
+const initialState = {
+  error: null,
+  data: null,
+};
+
+export default function JobForm({ job, submit, ...rest }: JobFormProps) {
   const [title, setTitle] = useState('');
   const [salary, setSalary] = useState(0);
   const [description, setDescription] = useState<null | string>(null);
+  const [state, formAction] = useFormState(submit, initialState);
 
   useEffect(() => {
     job?.title && setTitle(job.title);
@@ -71,7 +79,7 @@ export default function JobForm({ job, ...rest }: JobFormProps) {
   }, [job?.title, job?.salary, job?.description]);
 
   return (
-    <form {...rest}>
+    <form action={formAction} {...rest}>
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -94,6 +102,7 @@ export default function JobForm({ job, ...rest }: JobFormProps) {
                   onChange={e => setTitle(e.target.value)}
                 />
               </div>
+              <InputError error={state?.error} fieldName="title" />
             </div>
 
             <div className="sm:col-span-3">
@@ -107,6 +116,7 @@ export default function JobForm({ job, ...rest }: JobFormProps) {
                   onChange={e => setSalary(+e.target.value)}
                 />
               </div>
+              <InputError error={state?.error} fieldName="salary" />
             </div>
 
             <div className="sm:col-span-6">
@@ -120,10 +130,12 @@ export default function JobForm({ job, ...rest }: JobFormProps) {
                   onChange={e => setDescription(e.target.value)}
                 />
               </div>
+              <InputError error={state?.error} fieldName="description" />
             </div>
           </div>
         </div>
       </div>
+
       <JobFormButtons jobId={job?.id} />
     </form>
   );
