@@ -11,6 +11,7 @@ interface JobShowProps {
     name: string;
   };
   salary: number;
+  location: string | null;
   description: string | null;
 }
 
@@ -19,6 +20,7 @@ export default function JobShow({
   title,
   employer,
   salary,
+  location,
   description,
 }: JobShowProps) {
   return (
@@ -27,7 +29,7 @@ export default function JobShow({
       <h5 className="mb-3 text-sky-700">{employer.name}</h5>
       <div className="mb-5 grid grid-cols-[20px_1fr] gap-x-6 gap-y-1">
         <div>📍</div>
-        <div>Location</div>
+        <div>{location}</div>
         <div>🏢</div>
         <div>Industry</div>
         <div>🕒</div>

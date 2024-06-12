@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
 import Header from '@/components/ui/Header';
+import Heading from '@/components/ui/Heading';
 import JobForm from '@/components/job/JobForm';
 import { submitJobForm } from '@/actions/job';
 
@@ -13,7 +14,9 @@ export default function JobCreatePage() {
 
   return (
     <>
-      <Header>Create New Job</Header>
+      <Header>
+        <Heading>Create New Job</Heading>
+      </Header>
       <main>
         <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
           <JobForm submit={createJob} />

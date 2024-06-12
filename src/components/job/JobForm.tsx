@@ -71,12 +71,18 @@ export default function JobForm({ job, submit, ...rest }: JobFormProps) {
   const [salary, setSalary] = useState(0);
   const [description, setDescription] = useState<null | string>(null);
   const [state, formAction] = useFormState(submit, initialState);
+  const { pending } = useFormStatus();
 
   useEffect(() => {
     job?.title && setTitle(job.title);
     job?.salary && setSalary(job.salary);
     job?.description && setDescription(job.description);
   }, [job?.title, job?.salary, job?.description]);
+
+  if (pending) {
+    console.log('Form pending...');
+    return <p>Form submitted. Result pending.</p>;
+  }
 
   return (
     <form action={formAction} {...rest}>
