@@ -6,6 +6,7 @@ import Label from '@/components/ui/Label';
 import Input from '@/components/ui/Input';
 
 import { registerUser } from '@/actions/user';
+import { register } from '@/actions/auth';
 
 export const metadata: Metadata = {
   title: 'Next VPS | Register',
@@ -15,7 +16,6 @@ export default function Register() {
   async function submit(formData: FormData) {
     'use server';
     console.log('Form submitted');
-    await registerUser(formData);
   }
 
   return (
