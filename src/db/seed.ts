@@ -6,7 +6,11 @@ import { createJob } from './queries/job';
 
 async function seedUsers() {
   console.log('⏳ Seeding user...');
-  await createUser({ name: 'John Doe', email: 'jdoe@example.com' });
+  await createUser({
+    name: 'John Doe',
+    email: 'jdoe@example.com',
+    password: 'password',
+  });
   console.log('✅ User seeding completed.');
   console.log('------------------------------');
 }

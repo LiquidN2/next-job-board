@@ -24,5 +24,8 @@ export type SelectUser = typeof users.$inferSelect;
 // Insert request validation
 export const insertUserSchema = createInsertSchema(users, {
   email: schema => schema.email.trim().toLowerCase().email(),
-  password: schema => schema.password.trim().min(8),
+  password: schema =>
+    schema.password
+      .trim()
+      .min(8, { message: "Password's length must be at least 8 characters" }),
 });

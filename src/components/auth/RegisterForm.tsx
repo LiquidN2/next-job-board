@@ -7,6 +7,8 @@ import Label from '../ui/Label';
 import Input from '../ui/Input';
 import InputError from '../ui/InputError';
 
+import { registerUser } from '@/actions/auth';
+
 interface RegisterFormProps extends ComponentPropsWithoutRef<'form'> {
   submit: (prevState: any, formData: FormData) => Promise<any>;
 }
@@ -16,17 +18,17 @@ const initialState = {
   data: null,
 };
 
-export default function RegisterForm({ submit, ...rest }: RegisterFormProps) {
+export default function RegisterForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
   const { pending } = useFormStatus();
-  const [state, formAction] = useFormState(submit, initialState);
+  const [state, formAction] = useFormState(registerUser, initialState);
 
   return (
-    <form className="space-y-6" action={formAction} {...rest}>
+    <form className="space-y-6" action={formAction}>
       <div>
         <Label htmlFor="name">Name</Label>
         <div className="mt-2">
