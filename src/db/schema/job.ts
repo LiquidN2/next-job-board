@@ -1,5 +1,7 @@
 import { relations, sql } from 'drizzle-orm';
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
+
 import { employers } from './employer';
 
 export const jobs = sqliteTable('jobs', {
@@ -35,3 +37,14 @@ export const jobsRelation = relations(jobs, ({ one }) => ({
 
 export type InsertJob = typeof jobs.$inferInsert;
 export type SelectJob = typeof jobs.$inferSelect;
+
+// Validate insert request
+export const insertJobSchema = createInsertSchema(jobs, {
+  title: schema =>
+    schema.title.min(3, { message: 'Minimum length is 3 letters' }),
+  salary: schema =>
+    schema.salary.gt(0, { message: 'Salary must be greater than 0' }),
+});
+
+// Validate response
+export const selectJobSchema = createSelectSchema(jobs);
