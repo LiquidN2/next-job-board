@@ -1,19 +1,53 @@
-import { z } from 'zod';
-import { revalidatePath } from 'next/cache';
+'use server';
+
+import { desc, eq } from 'drizzle-orm';
 import { redirect } from 'next/navigation';
 
-import type { SelectJob, InsertJob } from '@/db/schema';
-import { createJob, updateJob } from '@/db/queries/job';
+import { db } from '@/db/db';
+import {
+  type InsertJob,
+  type SelectJob,
+  insertJobSchema,
+  jobs,
+} from '@/db/schema';
 
-export { createJob, updateJob, findJobs, findJobById } from '@/db/queries/job';
+// -------------------------------------------------------------------
+// DB QUERIES
+// -------------------------------------------------------------------
+// Create
+export async function createJob(data: InsertJob) {
+  await db.insert(jobs).values(data);
+}
 
-const JobSchema = z.object({
-  title: z.string().min(3, { message: "Minimum title's length is 3" }),
-  salary: z.number().gt(0, { message: 'Salary must be greater than 0' }),
-  description: z.string(),
-  employerId: z.number().gt(0, { message: 'Invalid employerId' }),
-});
+// Update
+export async function updateJob(id: SelectJob['id'], data: InsertJob) {
+  await db.update(jobs).set(data).where(eq(jobs.id, id));
+}
 
+// Delete
+export async function deleteJob(id: SelectJob['id']) {
+  await db.delete(jobs).where(eq(jobs.id, id));
+}
+
+// Find Many
+export async function findJobs() {
+  return db.query.jobs.findMany({
+    with: { employer: true },
+    orderBy: [desc(jobs.id)],
+  });
+}
+
+// Find By ID
+export async function findJobById(id: SelectJob['id']) {
+  return db.query.jobs.findFirst({
+    where: eq(jobs.id, id),
+    with: { employer: true },
+  });
+}
+
+// -------------------------------------------------------------------
+// APP ACTIONS
+// -------------------------------------------------------------------
 export async function validateJobData(formData: FormData) {
   'use server';
 
@@ -24,7 +58,8 @@ export async function validateJobData(formData: FormData) {
     employerId: 1,
   };
 
-  const validated = JobSchema.safeParse(rawData);
+  // const validated = JobSchema.safeParse(rawData);
+  const validated = insertJobSchema.safeParse(rawData);
 
   if (!validated.success) {
     return {
@@ -53,12 +88,10 @@ export async function submitJobForm(
   // create or update job
   if (id) {
     await updateJob(id, data);
-    revalidatePath(`/jobs/${id}`);
   } else {
     await createJob(data);
   }
 
   // revalidate and redirect
-  revalidatePath('/jobs');
   redirect('/jobs');
 }
