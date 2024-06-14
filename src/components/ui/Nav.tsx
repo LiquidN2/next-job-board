@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import { Fragment } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -16,6 +17,8 @@ import {
 } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
+import { logout } from '@/actions/auth';
+
 const user = {
   name: 'Tom Cook',
   email: 'tom@example.com',
@@ -28,9 +31,9 @@ const navigation = [
   { name: 'Contact', href: '/contact' },
 ];
 const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
+  { name: 'Your Profile', href: '/profile' },
+  { name: 'Settings', href: '/settings' },
+  // { name: 'Logout', href: '#' },
 ];
 
 function classNames(...classes: string[]) {
@@ -66,11 +69,11 @@ export default function Nav() {
                       <Link
                         key={item.name}
                         href={item.href}
-                        className={classNames(
-                          item.href === pathName
-                            ? 'bg-gray-900 text-white'
-                            : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'rounded-md px-3 py-2 text-sm font-medium'
+                        className={clsx(
+                          'rounded-md px-3 py-2 text-sm font-medium',
+                          item.href === pathName && 'bg-gray-900 text-white',
+                          item.href !== pathName &&
+                            'text-gray-300 hover:bg-gray-700 hove:text-white'
                         )}
                         aria-current={
                           item.href === pathName ? 'page' : undefined
@@ -122,20 +125,34 @@ export default function Nav() {
                     >
                       <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         {userNavigation.map(item => (
-                          <MenuItem key={item.name}>
-                            {({ active }) => (
-                              <a
+                          <MenuItem key={item.name} as={Fragment}>
+                            {({ focus }) => (
+                              <Link
                                 href={item.href}
-                                className={classNames(
-                                  active ? 'bg-gray-100' : '',
-                                  'block px-4 py-2 text-sm text-gray-700'
+                                className={clsx(
+                                  'block px-4 py-2 text-sm text-gray-700',
+                                  focus && 'bg-gray-100'
                                 )}
                               >
                                 {item.name}
-                              </a>
+                              </Link>
                             )}
                           </MenuItem>
                         ))}
+                        {/* Logout Button */}
+                        <MenuItem key="logout" as={Fragment}>
+                          {({ focus }) => (
+                            <button
+                              className={clsx(
+                                'w-full text-left block px-4 py-2 text-sm text-gray-700',
+                                focus && 'bg-gray-100'
+                              )}
+                              onClick={async () => await logout()}
+                            >
+                              Logout
+                            </button>
+                          )}
+                        </MenuItem>
                       </MenuItems>
                     </Transition>
                   </Menu>

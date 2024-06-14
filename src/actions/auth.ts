@@ -87,7 +87,7 @@ export async function login(_prevState: any, formData: FormData) {
     session.userEmail = user.email;
     await session.save();
 
-    response.data = { session };
+    response.data = { isLoggedIn: session.isLoggedIn };
 
     // Response
   } catch (error: any) {
