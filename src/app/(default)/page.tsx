@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: 'Next VPS | Dashboard',
 };
 
-export default function Home() {
+export default async function Home() {
   return (
     <>
       <Header>
