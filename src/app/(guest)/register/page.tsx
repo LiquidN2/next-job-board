@@ -2,22 +2,13 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import Label from '@/components/ui/Label';
-import Input from '@/components/ui/Input';
 import RegisterForm from '@/components/auth/RegisterForm';
-
-import { registerUser } from '@/actions/auth';
 
 export const metadata: Metadata = {
   title: 'Next VPS | Register',
 };
 
 export default function Register() {
-  async function submit(formData: FormData) {
-    'use server';
-    console.log('Form submitted');
-  }
-
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">

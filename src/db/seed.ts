@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker';
 
+import { createJob } from './queries/job';
 import { createUser } from './queries/user';
 import { createEmployer, getRndEmployerId } from './queries/employer';
-import { createJob } from './queries/job';
 
 async function seedUsers() {
   console.log('⏳ Seeding user...');

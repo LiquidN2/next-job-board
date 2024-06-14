@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
-// import Loading from './loading';
 import { Inter } from 'next/font/google';
 import '../globals.css';
 
 import Nav from '@/components/ui/Nav';
+// import Loading from './loading';
 
 const inter = Inter({ subsets: ['latin'] });
 

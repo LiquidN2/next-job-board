@@ -1,17 +1,14 @@
 'use client';
 
-import { type ComponentPropsWithoutRef, useState } from 'react';
+import { useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
+import { useRouter } from 'next/navigation';
 
 import Label from '../ui/Label';
 import Input from '../ui/Input';
 import InputError from '../ui/InputError';
 
 import { registerUser } from '@/actions/auth';
-
-interface RegisterFormProps extends ComponentPropsWithoutRef<'form'> {
-  submit: (prevState: any, formData: FormData) => Promise<any>;
-}
 
 const initialState = {
   error: null,
@@ -26,11 +23,14 @@ export default function RegisterForm() {
 
   const { pending } = useFormStatus();
   const [state, formAction] = useFormState(registerUser, initialState);
+  const router = useRouter();
 
   return (
     <form className="space-y-6" action={formAction}>
       <div>
-        <Label htmlFor="name">Name</Label>
+        <Label htmlFor="name" hasError={!!state?.error?.name}>
+          Name
+        </Label>
         <div className="mt-2">
           <Input
             id="name"
@@ -39,13 +39,16 @@ export default function RegisterForm() {
             value={name}
             onChange={e => setName(e.target.value)}
             required
+            hasError={!!state?.error?.name}
           />
         </div>
-        <InputError error={state?.error} fieldName="name" />
+        {!!state?.error?.name && <InputError>{state.error.name}</InputError>}
       </div>
 
       <div>
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email" hasError={!!state?.error?.email}>
+          Email
+        </Label>
         <div className="mt-2">
           <Input
             id="email"
@@ -55,13 +58,16 @@ export default function RegisterForm() {
             value={email}
             onChange={e => setEmail(e.target.value)}
             required
+            hasError={!!state?.error?.email}
           />
         </div>
-        <InputError error={state?.error} fieldName="email" />
+        {!!state?.error?.email && <InputError>{state.error.email}</InputError>}
       </div>
 
       <div>
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="password" hasError={!!state?.error?.password}>
+          Password
+        </Label>
         <div className="mt-2">
           <Input
             id="password"
@@ -71,13 +77,21 @@ export default function RegisterForm() {
             value={password}
             onChange={e => setPassword(e.target.value)}
             required
+            hasError={!!state?.error?.password}
           />
         </div>
-        <InputError error={state?.error} fieldName="password" />
+        {!!state?.error?.password && (
+          <InputError>{state.error.password}</InputError>
+        )}
       </div>
 
       <div>
-        <Label htmlFor="password-confirmation">Password confirmation</Label>
+        <Label
+          htmlFor="password-confirmation"
+          hasError={!!state?.error?.['password-confirmation']}
+        >
+          Password confirmation
+        </Label>
         <div className="mt-2">
           <Input
             id="password-confirmation"
@@ -87,8 +101,12 @@ export default function RegisterForm() {
             value={passwordConfirmation}
             onChange={e => setPasswordConfirmation(e.target.value)}
             required
+            hasError={!!state?.error?.['password-confirmation']}
           />
         </div>
+        {!!state?.error?.['password-confirmation'] && (
+          <InputError>{state.error['password-confirmation']}</InputError>
+        )}
       </div>
 
       <div>
