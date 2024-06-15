@@ -8,7 +8,7 @@ import Label from '../ui/Label';
 import Input from '../ui/Input';
 import InputError from '../ui/InputError';
 
-import { login } from '@/actions/auth';
+import { handleLogin } from '@/actions/auth';
 
 const initialState = {
   error: null,
@@ -21,7 +21,7 @@ export default function LoginForm() {
   const [password, setPassword] = useState('');
 
   const { pending } = useFormStatus();
-  const [state, formAction] = useFormState(login, initialState);
+  const [state, formAction] = useFormState(handleLogin, initialState);
 
   useEffect(() => {
     if (!state?.data?.isLoggedIn) return;
@@ -76,7 +76,7 @@ export default function LoginForm() {
           className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           disabled={pending}
         >
-          Register
+          Login
         </button>
       </div>
     </form>

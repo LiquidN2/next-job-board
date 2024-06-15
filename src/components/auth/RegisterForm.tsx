@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import { useRouter } from 'next/navigation';
 
@@ -8,7 +8,7 @@ import Label from '../ui/Label';
 import Input from '../ui/Input';
 import InputError from '../ui/InputError';
 
-import { registerUser } from '@/actions/auth';
+import { handleRegister } from '@/actions/auth';
 
 const initialState = {
   error: null,
@@ -16,14 +16,19 @@ const initialState = {
 };
 
 export default function RegisterForm() {
+  const router = useRouter();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
   const { pending } = useFormStatus();
-  const [state, formAction] = useFormState(registerUser, initialState);
-  const router = useRouter();
+  const [state, formAction] = useFormState(handleRegister, initialState);
+
+  useEffect(() => {
+    if (!state?.data?.isLoggedIn) return;
+    router.push('/');
+  }, [router, state]);
 
   return (
     <form className="space-y-6" action={formAction}>
