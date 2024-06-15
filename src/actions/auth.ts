@@ -190,7 +190,7 @@ export async function handleRegister(_prevState: any, formData: FormData) {
     if (!newUsers || newUsers.length === 0)
       throw new Error('Unable to register new user');
 
-    // 7. Login
+    // 7. Login with email & password
     const loginResponse = await login(userData.email, userData.password);
     if (loginResponse.error) {
       response.error = loginResponse.error;
