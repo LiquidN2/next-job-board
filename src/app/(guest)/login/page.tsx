@@ -1,19 +1,14 @@
 import type { Metadata } from 'next';
-import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
 import LoginForm from '@/components/auth/LoginForm';
-import { getSession } from '@/actions/auth';
 
 export const metadata: Metadata = {
   title: 'Next VPS | Login',
 };
 
 export default async function Login() {
-  const session = await getSession();
-  if (session.isLoggedIn) redirect('/');
-
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">

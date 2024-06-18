@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 import { Inter } from 'next/font/google';
 import '../globals.css';
 
+import ProtectedAccess from '@/components/auth/ProtectedAccess';
 import Nav from '@/components/ui/Nav';
 // import Loading from './loading';
 
@@ -22,9 +23,11 @@ export default function RootLayout({
     <html lang="en" className="h-full bg-gray-100">
       <body className={`h-full ${inter.className}`}>
         <div className="min-h-full">
-          <Nav />
-          {/* <Suspense fallback={<Loading />}>{children}</Suspense> */}
-          {children}
+          <ProtectedAccess>
+            <Nav />
+            {/* <Suspense fallback={<Loading />}>{children}</Suspense> */}
+            {children}
+          </ProtectedAccess>
         </div>
       </body>
     </html>
